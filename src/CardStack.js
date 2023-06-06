@@ -35,11 +35,9 @@ function CardStack() {
             }
 
             let card = result.data.cards[0];
-            setCards(() => [...cards, { id: card.code, img: card.image }]);
-            setRotations(() => [...rotations, Math.floor(Math.random() * 360)]);
-            return result.data;
-
-
+            console.log(cards);
+            setCards((cards) => [...cards, { id: card.code, img: card.image }]);
+            setRotations((rotations) => [...rotations, Math.floor(Math.random() * 360)]);
 
 
         } catch (error) {
@@ -48,29 +46,30 @@ function CardStack() {
     };
 
     useEffect(() => {
-        async function getCard() {
-            try {
-                let { deck_id } = deck;
-                const result = await axios.get(`${BASE_URL}/${deck_id}/draw`);
+        // async function getCard() {
+        //     try {
+        //         let { deck_id } = deck;
+        //         const result = await axios.get(`${BASE_URL}/${deck_id}/draw`);
 
-                if (result.data.remaining === 0) {
-                    setAutoDraw(false);
-                    throw new Error("no cards remaining!");
-                }
+        //         if (result.data.remaining === 0) {
+        //             setAutoDraw(false);
+        //             throw new Error("no cards remaining!");
+        //         }
 
-                let card = result.data.cards[0];
-                setCards(() => [...cards, { id: card.code, img: card.image }]);
-                setRotations(() => [...rotations, Math.floor(Math.random() * 360)]);
+        //         let card = result.data.cards[0];
+        //         setCards(() => [...cards, { id: card.code, img: card.image }]);
+        //         setRotations(() => [...rotations, Math.floor(Math.random() * 360)]);
 
 
-            } catch (error) {
-                alert(error);
-            }
-        }
+        //     } catch (error) {
+        //         alert(error);
+        //     }
+        // }
 
         if (autoDraw && !timerId.current) {
             timerId.current = setInterval(async () => {
-              await getCard();
+            //   await getCard();
+                await drawCard();
             }, 1000);
           }
       
@@ -79,7 +78,7 @@ function CardStack() {
             timerId.current = null;
           };
 
-    }, [cards, autoDraw, setAutoDraw, deck, rotations])
+    }, [autoDraw, setAutoDraw])
 
 
 
