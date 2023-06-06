@@ -35,9 +35,9 @@ function CardStack() {
             }
 
             let card = result.data.cards[0];
-            console.log(cards);
-            setCards((prevCards) => [...prevCards, { id: card.code, img: card.image }]);
-            setRotations((rotations) => [...rotations, Math.floor(Math.random() * 360)]);
+            
+            setCards(prevCards => [...prevCards, { id: card.code, img: card.image }]);
+            setRotations((prevRotations) => [...prevRotations, Math.floor(Math.random() * 360)]);
 
 
         } catch (error) {
